@@ -1,3 +1,5 @@
+import base64
+
 import dash
 import numpy as np
 import pandas as pd
@@ -9,6 +11,10 @@ from dash.dependencies import Input, Output
 from plotly.offline import download_plotlyjs, init_notebook_mode, iplot, plot
 from plotly.subplots import make_subplots
 
+# replace with your own image
+image_filename = '/Users/prachiragrawal/Web Development/Climate-Dashboard/abc.svg'
+encoded_image = base64.b64encode(
+    open(image_filename, 'rb').read()).decode('ascii')
 df = pd.read_csv("GlobalLandTemperaturesByCountry.csv")
 df = df.drop("AverageTemperatureUncertainty", axis=1)
 df = df.rename(columns={'dt': 'Date'})
@@ -159,6 +165,24 @@ app.layout = html.Div(children=[
 
     html.Div([
         dcc.Graph(id='world-map-2', figure=fig2)], style={'width': '49%', 'display': 'inline-block'}),
+
+
+    html.H1(children='Country-wise Clustering ', style={
+        'textAlign': 'center'
+    }),
+
+    html.Br(),
+    html.Br(),
+
+    html.Div([html.Img(src='data:image/svg+xml;base64,{}'.format(encoded_image), style={'display': 'inline-block'}
+                       )], style={'width': '60%', 'textAlign': 'center', 'margin': '0 auto'}),
+
+
+    html.Br(),
+    html.Br(),
+
+
+
 
 
 
